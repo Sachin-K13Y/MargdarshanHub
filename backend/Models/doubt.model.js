@@ -20,12 +20,17 @@ const doubtSchema = new mongoose.Schema({
         answeredBy:{
             type:mongoose.Schema.Types.ObjectId,
             ref:'User',
-            answerText:{type:String},
+        },
+            answerText:{
+                type:String,
+            },
             createdAt:{
                 type:Date,
                 default:Date.now
             }
-        }
+        ,
+        _id:false,
+        
     }]
 },{timestamps:true});
 

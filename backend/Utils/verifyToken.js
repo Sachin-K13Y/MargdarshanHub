@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
-import User from '../Models/user.model.js';
-export const isAdmin = async(req,res,next)=>{
+
+export const hasToken = async(req,res,next)=>{
 
     try{
     const token = req.cookies.token
