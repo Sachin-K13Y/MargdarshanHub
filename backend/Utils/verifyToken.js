@@ -11,12 +11,9 @@ export const isAdmin = async(req,res,next)=>{
 
     const decodedToken = jwt.verify(token,process.env.JWT_SECRET);
   
-    const user = await User.findById(decodedToken.id);
+    req.user = decodedToken;
     
-    if(user.role != 'admin'){
-        return res.status(403).json({Success:false,message:"Unauthorized:User not Found",user});
-    } 
-  return res.status(200).json({Success:true});
+    
     next();
 }
     catch(err){
