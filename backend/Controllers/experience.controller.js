@@ -4,9 +4,15 @@ import User from "../Models/user.model.js";
 export const addExperience = async(req,res)=>{
     try{
     const seniorId = req.user.id
-    const senior = User.findById(seniorId);
+    const senior = await User.findById(seniorId);
 
-    console.log(senior);
+    console.log(senior.role)
+    
+    if(senior.role=='junior'){
+        return res.status(300).json({message:"You don't have access to write messages"});
+    }
+
+   
 
 
     const {company,experienceType,description} = req.body;
@@ -25,4 +31,15 @@ export const addExperience = async(req,res)=>{
             res.status(404).json({message:"Error in adding expereince"});
         }
 
+}
+
+export const getAllExperience = async(req,res)=>{
+    try{
+    const response = await Experience.find()
+    
+    res.status(200).json({message:"Fetched All The Experiences",response});
+    }
+    catch(err){
+        res.status(300).json({message:"Internal Server Error",err});
+    }
 }
