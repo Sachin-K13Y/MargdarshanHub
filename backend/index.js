@@ -5,6 +5,7 @@ import { connectDB } from './Config/db.js';
 import userRoute from './Routes/user.routes.js';
 import cookieParser from 'cookie-parser';
 import answerRoutes from './Routes/answer.routes.js';
+import experienceRoutes from './Routes/experience.routes.js';
 
 dotenv.config();
 const app = express();
@@ -18,3 +19,4 @@ app.listen(process.env.PORT,()=>{
 app.use('/doubts',doubtRoutes);
 app.use('/user',userRoute);
 app.use('/answer',answerRoutes)
+app.use('/experience',experienceRoutes);
