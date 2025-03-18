@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import User from '../Models/user.model.js';
 
 export const hasToken = async(req,res,next)=>{
 
@@ -33,20 +34,22 @@ export const hasToken = async(req,res,next)=>{
   
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         
-        console.log('Decoded token:', decoded);
-  
-        const user = await userModel.findById(decoded.userId);
-        console.log('User:', user);
-  
-        if (!user) {
-            return res.status(403).json({ message: 'Unauthorized: User not found' });
+        if(!decoded){
+            return res.status(404).json({Success:"false",message:"Not has Valid Token"});
         }
-  
-  
-        req.user = user;
+        
+        return res.status(200).json({Success:"true",message:"Token Verified"});
+        
+
+
+        
         next();
     } catch (error) {
         console.error('Error verifying token:', error);
         return res.status(401).json({ message: 'Unauthorized: Invalid token' });
     }
   };
+
+  export const test = (req,res)=>{
+    res.status(200).json({message:"Hello World"});
+  }

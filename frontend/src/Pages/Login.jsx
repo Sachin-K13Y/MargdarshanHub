@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axiosInstance from "../services";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [formData, setFormData] = useState({ email: "", password: "" });
-
+    const navigate = useNavigate();
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -11,7 +12,11 @@ function Login() {
     const handleSubmit = async(e) => {
         e.preventDefault();
         const response = await axiosInstance.post('/user/login',formData)
-        console.log(response.data);
+        const data = response.data;
+        
+        if(data.Success == true){
+            navigate('/')
+        }
     };
 
     return (
