@@ -1,7 +1,21 @@
 import React, { useState,useEffect } from 'react';
 import axiosInstance from '../services';
-
+import ExperienceCard from '../Components/ExperienceCard';
 function Experience() {
+    const [Experiences, setExperiences] = useState([]);
+      useEffect(() => {
+        const fetchExperiences = async () => {
+          try {
+            const response = await axiosInstance.get('/experience');
+            
+            setExperiences(response.data.response);
+          } catch (error) {
+            console.error("Error fetching experiences:", error);
+          }
+        };
+    
+        fetchExperiences();
+      }, []);
     const [experience, setExperience] = useState({
         company:"",
         experienceType:"",
@@ -63,17 +77,11 @@ function Experience() {
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">List of Experiences</h2>
                 <div className="space-y-4">
                     {/* Example Experience Card */}
-                    <div className="bg-white p-4 rounded-lg shadow-md border">
-                        <h3 className="text-lg font-semibold text-gray-900">Software Engineer at Google</h3>
-                        <p className="text-gray-700 text-sm">Full-Time | 2023</p>
-                        <p className="mt-2 text-gray-600 text-sm">Amazing learning experience with a great team!</p>
-                    </div>
+                    
+                    {Experiences.map((exp) => (
+    <ExperienceCard key={exp._id} Experience={exp} />
+))}
 
-                    <div className="bg-white p-4 rounded-lg shadow-md border">
-                        <h3 className="text-lg font-semibold text-gray-900">Data Analyst at Microsoft</h3>
-                        <p className="text-gray-700 text-sm">Internship | 2022</p>
-                        <p className="mt-2 text-gray-600 text-sm">Gained hands-on experience in data analysis.</p>
-                    </div>
                 </div>
             </div>
         </div>

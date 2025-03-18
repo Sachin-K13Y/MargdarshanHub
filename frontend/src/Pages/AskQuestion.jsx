@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import axiosInstance from '../services';
+import QuestionCard from '../Components/QuestionCard';
 function AskQuestion() {
     const [question, setQuestion] = useState("");
-   
+    const [answers,setAnswers] = useState([]);
+    useEffect(()=>{
+        const fetchQuestion = async(req,res)=>{
+            const response = await axiosInstance.get('/doubts');
+            console.log(response.data);
+            setAnswers(response.data);
+
+        }
+        fetchQuestion();
+    },[])
     
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
@@ -36,15 +46,9 @@ function AskQuestion() {
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Recent Questions</h2>
                 <div className="space-y-4">
                     {/* Example Question Card */}
-                    <div className="bg-white p-4 rounded-lg shadow-md border">
-                        <h3 className="text-lg font-semibold text-gray-900">How to implement authentication in MERN?</h3>
-                        <p className="mt-2 text-gray-600 text-sm">Asked by: John Doe</p>
-                    </div>
-
-                    <div className="bg-white p-4 rounded-lg shadow-md border">
-                        <h3 className="text-lg font-semibold text-gray-900">What is the best way to optimize React apps?</h3>
-                        <p className="mt-2 text-gray-600 text-sm">Asked by: Jane Smith</p>
-                    </div>
+                {answers.map((q)=>(
+                    <QuestionCard key={q._id} questionData={q}/>
+                ))}
                 </div>
             </div>
         </div>
