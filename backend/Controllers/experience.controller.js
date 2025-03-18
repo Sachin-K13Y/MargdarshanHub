@@ -43,3 +43,23 @@ export const getAllExperience = async(req,res)=>{
         res.status(300).json({message:"Internal Server Error",err});
     }
 }
+export const addUpvote = async(req,res)=>{
+    try{
+    const expId = req.params.id;
+    
+    const foundExperience = await Experience.findById(expId);
+
+    if(!foundExperience){
+        return res.status(404).json({message:"Not Found Experience"});
+    }
+
+    foundExperience.upvotes +=1;
+
+    await foundExperience.save();
+
+    return res.status(200).json({message:"Upvoted Successfully",foundExperience});
+}
+catch(err){
+    return res.status(300).json({message:"Internal Server Error",err});
+}
+}
