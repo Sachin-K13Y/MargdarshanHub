@@ -5,10 +5,15 @@ import { connectDB } from './Config/db.js';
 import userRoute from './Routes/user.routes.js';
 import cookieParser from 'cookie-parser';
 import answerRoutes from './Routes/answer.routes.js';
+import cors from 'cors'
 import experienceRoutes from './Routes/experience.routes.js';
 
 dotenv.config();
 const app = express();
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials:true,
+}));
 app.use(express.json())
 app.use(cookieParser())
 connectDB();

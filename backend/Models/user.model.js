@@ -14,9 +14,9 @@ const userSchema = new mongoose.Schema({
         enum:['junior','senior','admin'],
         default:'junior'
     },
-    company:{
+    name:{
         type:String,
-        default:null
+        
     },
     isVerified:{
         type:Boolean,

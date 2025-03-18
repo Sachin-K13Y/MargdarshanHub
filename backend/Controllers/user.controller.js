@@ -3,7 +3,8 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 export const Register = async(req,res)=>{
     try {
-        const {email,password,company} = req.body;
+        
+        const {email,password,name} = req.body;
         const hashedPassword = await bcrypt.hash(password,10);
         const existUser = await User.findOne({email});
         if(existUser){
@@ -14,7 +15,7 @@ export const Register = async(req,res)=>{
         
             email,
             password:hashedPassword,
-            company
+            name
         })
 
         await newUser.save();
@@ -63,3 +64,4 @@ export const Login = async(req,res)=>{
         res.status(403).json({Success:false,message:"Internal Server Error"})
     }
 }
+
