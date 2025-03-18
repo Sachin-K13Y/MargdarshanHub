@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt, { decode } from 'jsonwebtoken'
 import User from '../Models/user.model.js';
 
 export const hasToken = async(req,res,next)=>{
@@ -37,8 +37,10 @@ export const hasToken = async(req,res,next)=>{
         if(!decoded){
             return res.status(404).json({Success:"false",message:"Not has Valid Token"});
         }
+        const user = await User.findById(decoded.id);
+
         
-        return res.status(200).json({Success:"true",message:"Token Verified"});
+        return res.status(200).json({Success:"true",message:"Token Verified",user});
         
 
 

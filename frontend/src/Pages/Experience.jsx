@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import axiosInstance from '../services';
 
 function Experience() {
     const [experience, setExperience] = useState("");
-
+    const [senior,setSenior] = useState(false);
+    useEffect(() => {
+           const verifyAuthentication = async () => {
+               try {
+                   const response = await axiosInstance.get("/user/auth", { withCredentials: true });
+       
+                   console.log(response.data);
+       
+                   setSenior(response.data.user.role=='senior');
+               } catch (error) {
+                   console.error("Error verifying authentication:", error);
+                   setSenior(false);
+               }
+           };
+       
+           verifyAuthentication();
+           
+       }, []);
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
             {/* Experience Form */}
-            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+           {senior && ( <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
                 <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">Share Your Experience</h2>
                 <form action="" className="space-y-4">
                     <input type="text" placeholder="Company Name"
@@ -19,7 +37,7 @@ function Experience() {
                         className="w-full bg-blue-500 text-white p-2 rounded-lg font-semibold hover:bg-blue-600 transition">Submit</button>
                 </form>
             </div>
-
+)}
             {/* Experience List */}
             <div className="mt-8 w-full max-w-2xl">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">List of Experiences</h2>

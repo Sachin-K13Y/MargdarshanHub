@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-
+import { useEffect } from 'react';
+import axiosInstance from '../services';
 function AskQuestion() {
     const [question, setQuestion] = useState("");
-
+   
+    
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
             {/* Ask Question Form */}
-            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+            
+         <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
                 <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">Ask a Question</h2>
                 <form action="" className="space-y-4">
                     <input 
@@ -26,6 +29,7 @@ function AskQuestion() {
                     </button>
                 </form>
             </div>
+
 
             {/* Questions List */}
             <div className="mt-8 w-full max-w-2xl">
