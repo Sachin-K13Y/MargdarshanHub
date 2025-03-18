@@ -12,7 +12,6 @@ const experienceSchema = new mongoose.Schema({
     },
     experienceType:{
         type:String,
-        enum:['internship','full-time'],
         required:true
     },
     description:{
